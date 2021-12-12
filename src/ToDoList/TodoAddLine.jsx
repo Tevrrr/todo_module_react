@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 
-const TodoAddline = ({addLine}) => {
+const TodoAddline = ({addLine,value , setTextLine}) => {
     
-    const [TextLine, setTextLine] = useState();
+    
     function addNewLine(e){
         e.preventDefault()
-        addLine(TextLine);
+        addLine(value);
         setTextLine("")
     }
     function editLine(params) {
@@ -16,7 +16,7 @@ const TodoAddline = ({addLine}) => {
         <form className={styles.TodoAddLine}>
             <input 
             type="text" 
-            value={TextLine}
+            value={value}
             onChange={e => {setTextLine(e.target.value)}}
             />
             <button onClick={addNewLine}>

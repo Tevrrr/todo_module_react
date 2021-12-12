@@ -9,7 +9,7 @@
     box-sizing: border-box;
 }
 .App{
-    max-width: 600px;
+    max-width: 400px;
     margin: 10px auto;
     font-size: 20px;
     font-weight: bold;

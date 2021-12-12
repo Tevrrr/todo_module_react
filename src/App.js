@@ -6,8 +6,7 @@ function App() {
   return (
     <div className="App">
       <Todo
-        TodoList={[{ text: "Купить чива" }, { text: "Купить пипсов" }]}
-        Max_Width="600"
+        TodoList={[]}
       />
     </div>
   );

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 
-const Todoline = ({index, textLine, remove, edit}) => {
+const Todoline = ({index, textLine, checked, remove, edit, setChecked}) => {
     return (
 
         <div className={styles.TodoLine}>
-            <label>
-                <input  type="checkbox" className={styles.displayNone}/>
+            <label  onClick={() => setChecked(index)}>
+                <input checked={checked} type="checkbox" className={styles.displayNone}/>
                 <i class="fa-solid fa-check"></i>                
                 {(index + 1) + ". "}<p>{ textLine}</p>
             </label>
