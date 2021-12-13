@@ -5,10 +5,10 @@ const Todoline = ({index, textLine, checked, remove, edit, setChecked}) => {
     return (
 
         <div className={styles.TodoLine}>
-            <label  onClick={() => setChecked(index)}>
+            <label>
                 <input checked={checked} type="checkbox" className={styles.displayNone}/>
-                <i class="fa-solid fa-check"></i>                
-                {(index + 1) + ". "}<p>{ textLine}</p>
+                <div  onClick={() => setChecked(index)}><i class="fa-solid fa-check"></i>                
+                <p>{(index + 1) + ". "}{ textLine}</p></div>
             </label>
             <div>
                 <button onClick={() => edit(index)}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Todoline from "./TodoLine";
 import TodoAddline from "./TodoAddLine";
 import NavBar from "./NavBar";
@@ -8,9 +8,33 @@ const Todo = ({ TodoList }) => {
   const [TodoList_, setTodoList_] = useState(
     TodoList.map((item,i) => {
     item.key = Date.now()-(TodoList.length-i+1)*1000;
-    if (typeof item.checked === undefined) item.checked = false;
     return item
   }));
+  const [filter, setFilter] = useState({option: '', query: ''});
+
+
+  const sortedTodoList = useMemo(() => {
+      return [...TodoList_].sort((a,b) =>{
+        if(typeof a[filter.option] == "string") return a[filter.option].localeCompare(b[filter.option]);
+        else if(typeof a[filter.option]== "boolean"){
+            if(a[filter.option])return 1;
+            else return -1
+          } 
+        else {
+          if(a[filter.option] < b[filter.option]) return -1;
+          else if(a[filter.option] > b[filter.option]) return 1;
+          else return 0;
+        }})
+  }, [TodoList_, filter.option])
+
+  const sortedAndSearchedTodoList = useMemo(() => {
+      return sortedTodoList.filter(item => {
+          if(!filter.query) return item;
+          else if(item.text.toLowerCase().includes(filter.query.toLowerCase()))
+            return item;
+      })
+
+  }, [sortedTodoList, filter.query])
   const [editItem, setEditItem] = useState("");
   function remove(index) {
     setTodoList_(TodoList_.filter((p, i) =>i !==index));
@@ -19,29 +43,15 @@ const Todo = ({ TodoList }) => {
     remove(index);
     setEditItem(TodoList_[index].text);
   };
-  function setChecked(index, value) {
+  function setChecked(index) {
     setTodoList_(TodoList_.map((item, i) =>{
-      if(i ===index)  item.checked=value;
+      if(i ===index)  item.checked=!item.checked;
+      console.log(index+':'+ item.checked)
       return item;
     }));
   }
   function addLine(text) {
     setTodoList_([...TodoList_, {text: text, key: Date.now(), checked: false}])
-  }
-  function sortList(sort) {
-    setTodoList_([...TodoList_].sort((a,b) =>{
-      if(typeof a[sort] == "string") return a[sort].localeCompare(b[sort]);
-      else if(typeof a[sort] == "boolean"){
-          if(a[sort])return 1;
-          else return -1
-        } 
-      else {
-        if(a[sort] < b[sort]) return -1;
-        else if(a[sort] > b[sort]) return 1;
-        else return 0;
-      }
-      }
-    ))
   }
   return (
     <div  className={styles.Todo}>
@@ -50,9 +60,10 @@ const Todo = ({ TodoList }) => {
         options={[{value: "key", text: "По id"},
                   {value: "text", text: "По алфавиту"},
                   {value: "checked", text: "По выполнению"},]}
-        onChange={sortList}
-      />
-      {TodoList_.map((TodoItem, index) => (
+        filter={filter}
+        setFilter={setFilter}
+        />
+      {sortedAndSearchedTodoList.map((TodoItem, index) => (
         <Todoline
           index={index}
           checked={TodoItem.checked}

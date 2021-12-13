@@ -7,14 +7,16 @@
 }
 
 .TodoLine,
-.TodoAddLine{
+.TodoAddLine,
+.NavBar{
     display: flex;
     column-gap: .5em;
-    align-items: center;
+    align-items: stretch;
+    padding: 5px;
     /* color: #F6F2D4;
     background-color: #5584AC; */
     transition: .3s ease;
-    padding-right: 5px;
+
 }
 
 .TodoLine:hover{
@@ -24,6 +26,7 @@
 
 .TodoLine >div{
     display: flex;
+    align-items: center;
 }
 
 .TodoLine button,
@@ -51,14 +54,20 @@
     display: flex;
     align-items: center;
     column-gap: .5em;
-    padding: 10px;
+}
+
+.TodoLine > label div{
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    column-gap: .5em;
 }
 
 .displayNone{
     display: none;
 }
 
-input[type="checkbox"]+ i{
+input[type="checkbox"]+div> i{
     background-color: #00000060;
     border-radius: 50%;
     padding: 5px;
@@ -66,31 +75,35 @@ input[type="checkbox"]+ i{
     transition: .25s ease;
 }
 
-input[type="checkbox"]:checked + i{
+input[type="checkbox"]:checked + div> i{
     opacity: 1;
 
 }
 
-.TodoAddLine input[type="text"]{
+input[type="text"]{
     font-size: 1em;
+    width: 0;
     flex-grow: 1;
     background-color: #ffffff2d;
     padding: 5px;
-    margin: 5px;
     border: solid #00000060 2px;
     color: inherit;
 }
 
-.TodoAddLine input[type="text"]:active, :hover, :focus {
+input[type="text"]:active, :hover, :focus {
     outline: 0;
     outline-offset: 0;
 }
 
 .TodoSelect{
-    min-width: 50%;
     border: solid #00000060 2px;
     background-color: #ffffff2d;
     color: inherit;
     font-size: 1em;
-    margin: 5px;
+}
+
+.NavBar{
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
 }
