@@ -17,8 +17,7 @@ const Todo = ({ TodoList }) => {
       return [...TodoList_].sort((a,b) =>{
         if(typeof a[filter.option] == "string") return a[filter.option].localeCompare(b[filter.option]);
         else if(typeof a[filter.option]== "boolean"){
-            if(a[filter.option])return 1;
-            else return -1
+            if(!a[filter.option] && b[filter.option])return -1;
           } 
         else {
           if(a[filter.option] < b[filter.option]) return -1;
@@ -43,10 +42,10 @@ const Todo = ({ TodoList }) => {
     remove(index);
     setEditItem(TodoList_[index].text);
   };
-  function setChecked(index) {
-    setTodoList_(TodoList_.map((item, i) =>{
-      if(i ===index)  item.checked=!item.checked;
-      console.log(index+':'+ item.checked)
+  function setChecked(id) {
+    setTodoList_(TodoList_.map((item) =>{
+      if(item.key ===id)  item.checked=!item.checked;
+      console.log(id+':'+ item.checked)
       return item;
     }));
   }
