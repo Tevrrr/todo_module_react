@@ -7,7 +7,6 @@ const TodoAddline = ({ addLine, value, setTextLine }) => {
         addLine(value);
         setTextLine("");
     }
-    function editLine(params) {}
     return (
         <form className={styles.TodoAddLine}>
             <input
