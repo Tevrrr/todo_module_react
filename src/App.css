@@ -1,18 +1,20 @@
-:root{
-    font-family: sans-serif;
-    font-size: 16px;
-    background-color: rgb(240, 255, 249);
+/** @format */
+
+:root {
+	font-family: sans-serif;
+	font-size: 16px;
+	background-color: rgb(240, 255, 249);
 }
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
-.App{
-    max-width: 400px;
-    margin: 10px auto;
-    font-size: 20px;
-    font-weight: bold;
-    color: #F6F2D4;
-    background-color: #5584AC;
+.App {
+	max-width: 400px;
+	margin: 10px auto;
+	font-size: 20px;
+	font-weight: bold;
+	color: #f6f2d4;
+	background-color: #5584ac;
 }
