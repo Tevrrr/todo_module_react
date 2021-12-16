@@ -1,56 +1,37 @@
 /** @format */
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import NavBar from './NavBar';
 import styles from './styles.module.css';
+import './CSSTransition.css';
 import TodoAddline from './TodoAddLine';
 import Todoline from './TodoLine';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { useLines } from './hooks/useLines';
 
-const Todo = ({ TodoList }) => {
+const Todo = ({ TodoList}) => {
 	const [TodoList_, setTodoList_] = useState(
 		TodoList.map((item, i) => {
 			item.key = Date.now() - (TodoList.length - i + 1) * 1000;
 			return item;
 		})
-	);
+    );
+    
 	const [filter, setFilter] = useState({ option: '', query: '' });
-
-	const sortedTodoList = useMemo(() => {
-		return [...TodoList_].sort((a, b) => {
-			if (typeof a[filter.option] == 'string')
-				return a[filter.option].localeCompare(b[filter.option]);
-			else if (typeof a[filter.option] == 'boolean') {
-				if (!a[filter.option] && b[filter.option]) return -1;
-			} else {
-				if (a[filter.option] < b[filter.option]) return -1;
-				else if (a[filter.option] > b[filter.option]) return 1;
-				else return 0;
-			}
-		});
-	}, [TodoList_, filter.option]);
-
-	const sortedAndSearchedTodoList = useMemo(() => {
-		return sortedTodoList.filter((item) => {
-			if (!filter.query) return item;
-			else if (
-				item.text.toLowerCase().includes(filter.query.toLowerCase())
-			)
-				return item;
-		});
-	}, [sortedTodoList, filter.query]);
+	const sortedTodoList = useLines(TodoList_, filter.option, filter.query);
 	const [editItem, setEditItem] = useState('');
+
 	function remove(index) {
 		setTodoList_(TodoList_.filter((p, i) => i !== index));
 	}
 	function edit(index) {
 		remove(index);
-		setEditItem(TodoList_[index].text);
+		setEditItem(TodoList_[index].title);
 	}
 	function setChecked(id) {
 		setTodoList_(
 			TodoList_.map((item) => {
-				if (item.key === id) item.checked = !item.checked;
-				console.log(id + ':' + item.checked);
+				if (item.key === id) item.completed = !item.completed;
 				return item;
 			})
 		);
@@ -58,7 +39,7 @@ const Todo = ({ TodoList }) => {
 	function addLine(text) {
 		setTodoList_([
 			...TodoList_,
-			{ text: text, key: Date.now(), checked: false },
+			{ title: text, key: Date.now(), completed: false },
 		]);
 	}
 	return (
@@ -67,24 +48,30 @@ const Todo = ({ TodoList }) => {
 				defaltValue='Сортировать'
 				options={[
 					{ value: 'key', text: 'По id' },
-					{ value: 'text', text: 'По алфавиту' },
-					{ value: 'checked', text: 'По выполнению' },
+					{ value: 'title', text: 'По алфавиту' },
+					{ value: 'completed', text: 'По выполнению' },
 				]}
 				filter={filter}
 				setFilter={setFilter}
 			/>
-			{sortedAndSearchedTodoList.map((TodoItem, index) => (
-				<Todoline
-					index={index}
-					checked={TodoItem.checked}
-					id={TodoItem.key}
-					textLine={TodoItem.text}
-					key={TodoItem.key}
-					remove={remove}
-					edit={edit}
-					setChecked={setChecked}
-				/>
-			))}
+			<TransitionGroup>
+				{sortedTodoList.map((TodoItem, index) => (
+					<CSSTransition
+						key={TodoItem.key}
+						timeout={300}
+						classNames='alert'>
+						<Todoline
+							index={index}
+							checked={TodoItem.checked}
+							id={TodoItem.key}
+							textLine={TodoItem.title}
+							remove={remove}
+							edit={edit}
+							setChecked={setChecked}
+						/>
+					</CSSTransition>
+				))}
+			</TransitionGroup>
 			<TodoAddline
 				addLine={addLine}
 				value={editItem}

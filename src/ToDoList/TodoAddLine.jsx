@@ -1,17 +1,20 @@
 /** @format */
 
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
 
 const TodoAddline = ({ addLine, value, setTextLine }) => {
 	function addNewLine(e) {
 		e.preventDefault();
-		addLine(value);
-		setTextLine('');
+		if (value.length > 0 && value.length <= 100) {
+			addLine(value);
+			setTextLine('');
+		}
 	}
 	return (
 		<form className={styles.TodoAddLine}>
 			<input
+				placeholder='Новое задание'
 				type='text'
 				value={value}
 				onChange={(e) => {

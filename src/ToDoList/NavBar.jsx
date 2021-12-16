@@ -29,6 +29,7 @@ const NavBar = ({ options, defaltValue, setFilter, filter }) => {
 					setFilter({ ...filter, query: e.target.value })
 				}
 				value={filter.query}
+				placeholder='Поиск'
 			/>
 		</div>
 	);

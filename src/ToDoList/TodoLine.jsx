@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
 
 const Todoline = ({
@@ -16,7 +16,7 @@ const Todoline = ({
 		<div className={styles.TodoLine}>
 			<label>
 				<input
-					checked={checked}
+					defaultChecked={checked}
 					type='checkbox'
 					className={styles.displayNone}
 				/>

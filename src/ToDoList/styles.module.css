@@ -6,6 +6,7 @@
 	font-weight: inherit;
 	color: inherit;
 	background-color: inherit;
+    overflow: hidden;
 }
 
 .TodoLine,
@@ -88,7 +89,10 @@ input[type='text'] {
 	border: solid #00000060 2px;
 	color: inherit;
 }
-
+input[type='text']::placeholder{
+    color: inherit;
+    opacity: 0.6;
+}
 input[type='text']:active,
 :hover,
 :focus {
@@ -108,3 +112,8 @@ input[type='text']:active,
 	padding: 5px;
 	justify-content: space-between;
 }
+.NavBar input[type='text']{
+    max-width: 400px;
+}
+
+
