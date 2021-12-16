@@ -3,13 +3,11 @@ import Todo from "./ToDoList/Todo";
 import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <Todo
-        TodoList={[]}
-      />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Todo TodoList={[]} />
+        </div>
+    );
 }
 
 export default App;
