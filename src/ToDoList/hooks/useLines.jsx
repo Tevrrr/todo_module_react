@@ -20,15 +20,17 @@ const useSortedLines = (lines, sort) => {
 	return sortedLines;
 };
 
-const useLines = (lines, sort, query) => {
+const useLines = (lines, sort, query, startIndex, endIndex) => {
 	const sortedLines = useSortedLines(lines, sort);
 	const sortedAndSearchedTodoList = useMemo(() => {
-		return sortedLines.filter((item) => {
-			if (!query) return item;
-			else if (item.text.toLowerCase().includes(query.toLowerCase()))
-				return item;
+		return sortedLines.filter((item, i) => {
+			if (i >= startIndex && i < endIndex) {
+				if (!query) return item;
+				else if (item.text.toLowerCase().includes(query.toLowerCase()))
+					return item;
+			}
 		});
-	}, [sortedLines, query]);
+	}, [lines, sortedLines, query, startIndex]);
 
 	return sortedAndSearchedTodoList;
 };

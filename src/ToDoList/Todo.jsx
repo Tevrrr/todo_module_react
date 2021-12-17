@@ -3,53 +3,58 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import styles from './styles.module.css';
-import './CSSTransition.css';
 import TodoAddline from './TodoAddLine';
-import Todoline from './TodoLine';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useLines } from './hooks/useLines';
 import axios from 'axios';
 import useFeatch from './hooks/useFeatch';
+import usePagination from './hooks/usePagination';
+import TodoList from './TodoList';
+import NavPages from './NavPages';
 
-const Todo = ({ url}) => {
+const Todo = ({ url, limit = 10 }) => {
 	const [TodoList_, setTodoList_] = useState([]);
-    
+
 	const [filter, setFilter] = useState({ option: '', query: '' });
-	const sortedTodoList = useLines(TodoList_, filter.option, filter.query);
+
 	const [editItem, setEditItem] = useState('');
-    const [featchTodos, isTodosLoading, TodosError] = useFeatch(async () => {
+	const [totalPages, setTotalPages] = useState(0);
+	const [page, setPage] = useState(1);
+	const sortedTodoList = useLines(
+		TodoList_,
+		filter.option,
+		filter.query,
+		(page - 1) * limit,
+		page * limit
+	);
+	const Pages = usePagination(totalPages);
+
+	const [featchTodos, isTodosLoading, TodosError] = useFeatch(async () => {
 		const response = await axios.get(url);
 		setTodoList_(
 			response.data.map((item, i) => {
-				item.key = Date.now() - (response.data.length - i + 1) * 1000;
-				return item;
+                return {
+					checked: item.completed,
+					title: item.title,
+					key: Date.now() - (response.data.length - i + 1) * 1000,
+				};
 			})
-		);
+        );
+		setTotalPages(Math.ceil(response.headers['x-total-count'] / limit));
 	});
-    useEffect(() => {
-        featchTodos();
-        
-    }, []);
+	useEffect(() => {
+		featchTodos();
+	}, []);
 
-	function remove(index) {
-		setTodoList_(TodoList_.filter((p, i) => i !== index));
-	}
-	function edit(index) {
-		remove(index);
-		setEditItem(TodoList_[index].title);
-	}
-	function setChecked(id) {
-		setTodoList_(
-			TodoList_.map((item) => {
-				if (item.key === id) item.completed = !item.completed;
-				return item;
-			})
-		);
-	}
+	useEffect(() => {
+		if (sortedTodoList.length <= 0 && page > 1) setPage(page - 1);
+        setTotalPages(Math.ceil(TodoList_.length / limit));
+        
+	}, [sortedTodoList]);
+
 	function addLine(text) {
 		setTodoList_([
 			...TodoList_,
-			{ title: text, key: Date.now(), completed: false },
+			{ title: text, key: Date.now(), checked: false },
 		]);
 	}
 	return (
@@ -59,7 +64,7 @@ const Todo = ({ url}) => {
 				options={[
 					{ value: 'key', text: 'По id' },
 					{ value: 'title', text: 'По алфавиту' },
-					{ value: 'completed', text: 'По выполнению' },
+					{ value: 'checked', text: 'По выполнению' },
 				]}
 				filter={filter}
 				setFilter={setFilter}
@@ -67,33 +72,26 @@ const Todo = ({ url}) => {
 			{TodosError && (
 				<h3 style={{ textAlign: 'center' }}>Ошибка: {TodosError}</h3>
 			)}
-			<TransitionGroup>
-				{!isTodosLoading ? (
-					sortedTodoList.map((TodoItem, index) => (
-						<CSSTransition
-							key={TodoItem.key}
-							timeout={300}
-							classNames='alert'>
-							<Todoline
-								index={index}
-								checked={TodoItem.checked}
-								id={TodoItem.key}
-								textLine={TodoItem.title}
-								remove={remove}
-								edit={edit}
-								setChecked={setChecked}
-							/>
-						</CSSTransition>
-					))
-				) : (
-					<h4 style={{ textAlign: 'center' }}>Загрузка...</h4>
-				)}
-			</TransitionGroup>
+			<TodoList
+				isTodosLoading={isTodosLoading}
+				sortedTodoList={sortedTodoList}
+				TodoList={TodoList_}
+				setTodoList={setTodoList_}
+				setEditItem={setEditItem}
+				startIndex={(page - 1) * limit}
+			/>
+            <NavPages
+                Pages={Pages}
+                setPage={setPage}
+                page={page}
+            />
 			<TodoAddline
 				addLine={addLine}
 				value={editItem}
 				setTextLine={setEditItem}
+				setEditItem={setEditItem}
 			/>
+			
 		</div>
 	);
 };

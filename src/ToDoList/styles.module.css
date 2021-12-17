@@ -31,7 +31,8 @@
 }
 
 .TodoLine button,
-.TodoAddLine button {
+.TodoAddLine button,
+.NavPages button {
 	cursor: pointer;
 	width: 2.2em;
 	height: 1.75em;
@@ -116,4 +117,22 @@ input[type='text']:active,
     max-width: 400px;
 }
 
+.NavPages{
+    display: flex;
+    column-gap: .3em;
+    justify-content: center;
+    align-items: flex-end;
+}
 
+.NavPages button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid #00000060 2px;
+	background-color: #ffffff2d;
+    opacity: .7;
+}
+.NavPages button:hover,
+.NavPages button.activ{
+    opacity: 1;
+}

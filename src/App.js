@@ -8,7 +8,7 @@ function App() {
    
     return (
 		<div className='App'>
-			<Todo url='https://jsonplaceholder.typicode.com/todos' />
+			<Todo url='https://jsonplaceholder.typicode.com/todos?_limit=200' />
 		</div>
 	);
 }
