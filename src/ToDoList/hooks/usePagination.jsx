@@ -1,14 +1,15 @@
-import {useMemo} from 'react';
+/** @format */
+
+import { useMemo } from 'react';
 
 const usePagination = (totalPages) => {
-    return useMemo(() => {
+	return useMemo(() => {
 		let result = [];
 		for (let i = 0; i < totalPages; i++) {
 			result.push(i + 1);
 		}
 		return result;
 	}, [totalPages]);
-    
-}
+};
 
-export default usePagination
+export default usePagination;

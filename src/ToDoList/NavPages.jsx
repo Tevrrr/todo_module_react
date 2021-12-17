@@ -28,7 +28,7 @@ const NavPages = ({ Pages, setPage, page }) => {
 				)
 					return printButton(item);
 			})}
-			{page + 2 >= Pages.length-1 ? '' : <p>...</p>}
+			{page + 2 >= Pages.length - 1 ? '' : <p>...</p>}
 
 			{printButton(Pages[Pages.length - 1])}
 		</div>

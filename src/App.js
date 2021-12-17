@@ -1,14 +1,13 @@
 /** @format */
 
-import React,{useState, useMemo} from 'react';
+import React from 'react';
 import Todo from './ToDoList/Todo';
 import './App.css';
 
 function App() {
-   
-    return (
+	return (
 		<div className='App'>
-			<Todo url='https://jsonplaceholder.typicode.com/todos?_limit=200' />
+			<Todo url='https://jsonplaceholder.typicode.com/todos?_limit=20' />
 		</div>
 	);
 }

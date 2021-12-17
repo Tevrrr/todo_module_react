@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 
 const useFeatch = (callback) => {
 	const [isLoading, setIsLoading] = useState(false);

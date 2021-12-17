@@ -6,7 +6,7 @@
 	font-weight: inherit;
 	color: inherit;
 	background-color: inherit;
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .TodoLine,
@@ -90,9 +90,9 @@ input[type='text'] {
 	border: solid #00000060 2px;
 	color: inherit;
 }
-input[type='text']::placeholder{
-    color: inherit;
-    opacity: 0.6;
+input[type='text']::placeholder {
+	color: inherit;
+	opacity: 0.6;
 }
 input[type='text']:active,
 :hover,
@@ -113,26 +113,26 @@ input[type='text']:active,
 	padding: 5px;
 	justify-content: space-between;
 }
-.NavBar input[type='text']{
-    max-width: 400px;
+.NavBar input[type='text'] {
+	max-width: 400px;
 }
 
-.NavPages{
-    display: flex;
-    column-gap: .3em;
-    justify-content: center;
-    align-items: flex-end;
+.NavPages {
+	display: flex;
+	column-gap: 0.3em;
+	justify-content: center;
+	align-items: flex-end;
 }
 
-.NavPages button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: solid #00000060 2px;
+.NavPages button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: solid #00000060 2px;
 	background-color: #ffffff2d;
-    opacity: .7;
+	opacity: 0.7;
 }
 .NavPages button:hover,
-.NavPages button.activ{
-    opacity: 1;
+.NavPages button.activ {
+	opacity: 1;
 }

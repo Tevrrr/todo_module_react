@@ -5,14 +5,14 @@ import Todoline from './TodoLine';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './CSSTransition.css';
 
-const TodoList = (
-	{setEditItem,
+const TodoList = ({
+	setEditItem,
 	TodoList,
 	setTodoList,
 	isTodosLoading,
-    sortedTodoList,
-    startIndex}
-) => {
+	sortedTodoList,
+	startIndex,
+}) => {
 	function remove(index) {
 		setTodoList(TodoList.filter((p, i) => i !== index));
 	}
@@ -23,11 +23,11 @@ const TodoList = (
 	function setChecked(id) {
 		setTodoList(
 			TodoList.map((item) => {
-				if (item.key === id) item.completed = !item.completed;
+				if (item.key === id) item.checked = !item.checked;
 				return item;
 			})
 		);
-    }
+	}
 	return (
 		<div>
 			{!isTodosLoading ? (
@@ -38,7 +38,7 @@ const TodoList = (
 							timeout={300}
 							classNames='alert'>
 							<Todoline
-								index={startIndex+index}
+								index={startIndex + index}
 								checked={TodoItem.checked}
 								id={TodoItem.key}
 								textLine={TodoItem.title}

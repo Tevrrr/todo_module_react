@@ -30,15 +30,16 @@ const Todo = ({ url, limit = 10 }) => {
 
 	const [featchTodos, isTodosLoading, TodosError] = useFeatch(async () => {
 		const response = await axios.get(url);
+		console.log('Данные...');
 		setTodoList_(
 			response.data.map((item, i) => {
-                return {
+				return {
 					checked: item.completed,
 					title: item.title,
 					key: Date.now() - (response.data.length - i + 1) * 1000,
 				};
 			})
-        );
+		);
 		setTotalPages(Math.ceil(response.headers['x-total-count'] / limit));
 	});
 	useEffect(() => {
@@ -47,8 +48,7 @@ const Todo = ({ url, limit = 10 }) => {
 
 	useEffect(() => {
 		if (sortedTodoList.length <= 0 && page > 1) setPage(page - 1);
-        setTotalPages(Math.ceil(TodoList_.length / limit));
-        
+		setTotalPages(Math.ceil(TodoList_.length / limit));
 	}, [sortedTodoList]);
 
 	function addLine(text) {
@@ -80,18 +80,13 @@ const Todo = ({ url, limit = 10 }) => {
 				setEditItem={setEditItem}
 				startIndex={(page - 1) * limit}
 			/>
-            <NavPages
-                Pages={Pages}
-                setPage={setPage}
-                page={page}
-            />
+			<NavPages Pages={Pages} setPage={setPage} page={page} />
 			<TodoAddline
 				addLine={addLine}
 				value={editItem}
 				setTextLine={setEditItem}
 				setEditItem={setEditItem}
 			/>
-			
 		</div>
 	);
 };
