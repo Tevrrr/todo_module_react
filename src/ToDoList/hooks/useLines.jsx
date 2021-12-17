@@ -26,7 +26,7 @@ const useLines = (lines, sort, query, startIndex, endIndex) => {
 		return sortedLines.filter((item, i) => {
 			if (i >= startIndex && i < endIndex) {
 				if (!query) return item;
-				else if (item.text.toLowerCase().includes(query.toLowerCase()))
+				else if (item.title.toLowerCase().includes(query.toLowerCase()))
 					return item;
 			}
 		});
