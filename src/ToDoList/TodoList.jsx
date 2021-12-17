@@ -31,7 +31,7 @@ const TodoList = ({
 	return (
 		<div>
 			{!isTodosLoading ? (
-				<TransitionGroup>
+				<TransitionGroup >
 					{sortedTodoList.map((TodoItem, index) => (
 						<CSSTransition
 							key={TodoItem.key}
