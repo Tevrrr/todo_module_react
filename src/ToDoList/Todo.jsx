@@ -30,7 +30,6 @@ const Todo = ({ url, limit = 10 }) => {
 
 	const [featchTodos, isTodosLoading, TodosError] = useFeatch(async () => {
 		const response = await axios.get(url);
-		console.log('Данные...');
 		setTodoList_(
 			response.data.map((item, i) => {
 				return {
@@ -68,7 +67,8 @@ const Todo = ({ url, limit = 10 }) => {
 				]}
 				filter={filter}
 				setFilter={setFilter}
-			/>
+            />
+            
 			{TodosError && (
 				<h3 style={{ textAlign: 'center' }}>Ошибка: {TodosError}</h3>
 			)}

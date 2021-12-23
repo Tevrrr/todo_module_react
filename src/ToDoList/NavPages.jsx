@@ -16,22 +16,23 @@ const NavPages = ({ Pages, setPage, page }) => {
 		);
 	}
 	return (
-		<div className={styles.NavPages}>
-			{printButton(Pages[0])}
-			{page - 2 <= 2 ? '' : <p>...</p>}
-			{Pages.map((item) => {
-				if (
-					item != 1 &&
-					item != Pages.length &&
-					item >= page - 2 &&
-					item <= page + 2
-				)
-					return printButton(item);
-			})}
-			{page + 2 >= Pages.length - 1 ? '' : <p>...</p>}
+        Pages.length > 1 ? <div className={styles.NavPages}>
+            {printButton(Pages[0])}
+            {page - 2 <= 2 ? '' : <p>...</p>}
+            {Pages.map((item) => {
+                if (
+                    item != 1 &&
+                    item != Pages.length &&
+                    item >= page - 2 &&
+                    item <= page + 2
+                )
+                    return printButton(item);
+            })}
+            {page + 2 >= Pages.length - 1 ? '' : <p>...</p>}
 
-			{printButton(Pages[Pages.length - 1])}
-		</div>
+            {printButton(Pages[Pages.length - 1])}
+        </div>
+            : <div></div>
 	);
 };
 
